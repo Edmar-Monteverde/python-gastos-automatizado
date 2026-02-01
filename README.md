@@ -15,6 +15,8 @@ El proyecto está diseñado como una **utilidad reutilizable por línea de coman
 - 📄 Exporta un resumen a CSV
 - ⚙️ Configuración por línea de comandos (`argparse`)
 - 🧱 Código estructurado con POO (Programación Orientada a Objetos)
+- ✅ Validación fuerte del archivo CSV (columnas requeridas, formato de fecha, montos inválidos)
+
 
 ## 📁 Estructura del proyecto
 
@@ -52,6 +54,11 @@ fecha: string (YYYY-MM-DD)
 categoria: string
 
 monto: número decimal
+
+⚠️ El programa valida que el archivo CSV contenga las columnas requeridas
+y que los datos tengan el formato correcto.  
+Las filas inválidas son omitidas y se informa al usuario.
+
 
 ---
 ### ▶️ Uso
@@ -111,11 +118,9 @@ Este proyecto fue desarrollado con fines de **aprendizaje y portafolio**, con el
 
 ## 📌 Posibles mejoras futuras
 
-Filtros por fecha (--desde, --hasta)
+- Filtros por fecha (--desde, --hasta)
 
-Validaciones más estrictas del CSV
-
-Tests automatizados
+- Tests automatizados
 
 Soporte para otros formatos (Excel)
 ## 🧠 Aprendizajes clave
@@ -131,6 +136,8 @@ Durante el desarrollo de este proyecto se reforzaron y aplicaron los siguientes 
 - 📌 Manejo de errores y validaciones básicas de datos
 - 📌 Uso de Git con commits incrementales durante el desarrollo
 - 📌 Escritura de documentación clara orientada a usuarios y reclutadores
+- 📌 Implementación de validaciones fuertes y manejo de excepciones personalizadas
+
 
 Este proyecto ayudó a entender cómo transformar un script simple en una **herramienta reutilizable y mantenible**, similar a las utilizadas en entornos reales de trabajo.
 

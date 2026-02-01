@@ -31,7 +31,7 @@ python-gastos-automatizado/
 │ └── resumen.csv # (no versionado)
 │
 ├── .gitignore
-└── README.m
+└── README.md
 
 
 ---
@@ -44,6 +44,7 @@ El archivo CSV debe contener las siguientes columnas:
 fecha,categoria,monto
 2026-01-01,comida,12.50
 2026-01-01,transporte,3.20
+```
 
 
 fecha: string (YYYY-MM-DD)
@@ -51,10 +52,11 @@ fecha: string (YYYY-MM-DD)
 categoria: string
 
 monto: número decimal
-```
----
-## ▶️ Uso
 
+---
+### ▶️ Uso
+
+```bash
 Desde la raíz del proyecto, ejecuta:
 
  ▶️Usar valores por defecto: 
@@ -70,7 +72,7 @@ Desde la raíz del proyecto, ejecuta:
 ▶️Mostrar solo el Top 2 de categorías y no imprimir todos los gastos 
 
 📌 python src/main.py --top 2 --no-print
-
+```
 ## ⚙️ Argumentos disponibles
 
 | Argumento    | Descripción                          |
@@ -85,19 +87,14 @@ Desde la raíz del proyecto, ejecuta:
 
 ## 🧠 Tecnologías usadas
 
-Python 3
+- Python 3
+- Programación Orientada a Objetos (POO)
+- csv
+- argparse
+- dataclasses
+- defaultdict
+- Git & GitHub
 
-Programación Orientada a Objetos (POO)
-
-csv
-
-argparse
-
-dataclasses
-
-defaultdict
-
-Git & GitHub
 
 
 

@@ -2,6 +2,7 @@ import csv
 from collections import defaultdict
 from dataclasses import dataclass
 from typing import List, Dict, Tuple
+from datetime import datetime
 
 
 @dataclass(frozen=True)
@@ -9,6 +10,12 @@ class Gasto:  ## representa un gasto individual
     fecha: str
     categoria: str
     monto: float
+
+
+class CSVInvalidoError(Exception):
+    """Error personalizado para archivos CSV inválidos."""
+
+    pass
 
 
 class GestorGastos:
@@ -19,36 +26,54 @@ class GestorGastos:
     def cargar(self) -> None:
         """Lee el CSV y carga los gastos en memoria (solo una vez por ejecución)."""
         self.gastos = []
+        filas_invalidas = 0
 
         try:
             with open(self.ruta_csv, mode="r", encoding="utf-8") as file:
                 lector = csv.DictReader(file)
+
+                ## Validacion de columnas
+                columnas_requeridas = {"fecha", "categoria", "monto"}
+                if lector.fieldnames is None:
+                    raise CSVInvalidoError(
+                        "El archivo CSV está vacío o no tiene encabezados."
+                    )
+
+                faltantes = columnas_requeridas - set(lector.fieldnames)
+                if faltantes:
+                    raise CSVInvalidoError(
+                        f"El archivo CSV carece de las siguientes columnas requeridas: {', '.join(faltantes)}"
+                    )
+
                 for fila in lector:
                     # Validación mínima
-                    if (
-                        "fecha" not in fila
-                        or "categoria" not in fila
-                        or "monto" not in fila
-                    ):
-                        continue
-
                     try:
+                        fecha = fila["fecha"].strip()
+                        categoria = fila["categoria"].strip().lower()
+
+                        # Validar fecha
+                        datetime.strptime(fecha, "%Y-%m-%d")
+
                         monto = float(fila["monto"])
-                    except ValueError:
-                        continue  # salta filas con monto inválido
-                        ## crear objeto Gasto y agregar a la lista
-                    self.gastos.append(
-                        Gasto(
-                            fecha=fila["fecha"].strip(),
-                            categoria=fila["categoria"].strip().lower(),
-                            monto=monto,
+                        if monto < 0:
+                            raise ValueError("El monto no puede ser negativo.")
+
+                        self.gastos.append(
+                            Gasto(fecha=fecha, categoria=categoria, monto=monto)
                         )
-                    )
+                    except Exception:
+                        filas_invalidas += 1
+                        continue
 
         except FileNotFoundError as e:
             raise FileNotFoundError(
                 f"No se encontró el archivo: {self.ruta_csv}. Revisa la ruta."
             ) from e
+
+        if filas_invalidas > 0:
+            print(
+                f"Advertencia: Se encontraron {filas_invalidas} filas inválidas y fueron omitidas."
+            )
 
     def imprimir(self) -> None:  ## imprime todos los gastos cargados
         for gasto in self.gastos:

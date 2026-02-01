@@ -1,5 +1,5 @@
 import argparse
-from gestor_gastos import GestorGastos
+from gestor_gastos import GestorGastos, CSVInvalidoError
 
 
 def leer_argumentos() -> argparse.Namespace:
@@ -38,7 +38,11 @@ def main() -> None:
     args = leer_argumentos()  ## leer argumentos desde línea de comandos
 
     gestor = GestorGastos(args.input)
-    gestor.cargar()
+    try:
+        gestor.cargar()
+    except CSVInvalidoError as e:
+        print(f"❌ Error en el archivo CSV: {e}")
+        return  # Salir si no se encuentra el archivo
 
     if not args.no_print:
         print("\n--- GASTOS CARGADOS ---")

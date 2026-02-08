@@ -19,7 +19,7 @@ El proyecto está diseñado como una **utilidad reutilizable por línea de coman
 
 
 ## 📁 Estructura del proyecto
-
+```text
 python-gastos-automatizado/
 │
 ├── data/
@@ -34,6 +34,7 @@ python-gastos-automatizado/
 │
 ├── .gitignore
 └── README.md
+```
 
 
 ---
@@ -144,5 +145,6 @@ Este proyecto ayudó a entender cómo transformar un script simple en una **herr
 
 
 👤 Autor
+
 
 Edmar Monteverde
